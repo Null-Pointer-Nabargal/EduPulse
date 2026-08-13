@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
+import { getApiUrl } from '../../config/api';
 import { X, Plus, Trash2 } from 'lucide-react';
 
 export const CourseBuilderModal = ({ course, onClose, onSuccess }) => {
@@ -39,7 +40,7 @@ export const CourseBuilderModal = ({ course, onClose, onSuccess }) => {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    fetch('/api/courses/categories')
+    fetch(getApiUrl('/api/courses/categories'))
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {
@@ -139,7 +140,7 @@ export const CourseBuilderModal = ({ course, onClose, onSuccess }) => {
     };
 
     try {
-      const url = course ? `/api/admin/courses/${course._id}` : '/api/admin/courses';
+      const url = course ? getApiUrl(`/api/admin/courses/${course._id}`) : getApiUrl('/api/admin/courses');
       const method = course ? 'PUT' : 'POST';
 
       const res = await fetch(url, {

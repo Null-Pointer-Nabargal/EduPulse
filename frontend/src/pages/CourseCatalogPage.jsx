@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
+import { getApiUrl } from '../config/api';
 import {
   Search,
   Star,
@@ -27,7 +28,7 @@ export const CourseCatalogPage = () => {
   const [pagination, setPagination] = useState({ total: 0, totalPages: 1 });
 
   useEffect(() => {
-    fetch('/api/courses/categories')
+    fetch(getApiUrl('/api/courses/categories'))
       .then((res) => res.json())
       .then((data) => {
         if (data.success) setCategories(data.data);
@@ -45,7 +46,7 @@ export const CourseCatalogPage = () => {
     query.set('page', page.toString());
     query.set('limit', '9');
 
-    fetch(`/api/courses?${query.toString()}`)
+    fetch(getApiUrl(`/api/courses?${query.toString()}`))
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {

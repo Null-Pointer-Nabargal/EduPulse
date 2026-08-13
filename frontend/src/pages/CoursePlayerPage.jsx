@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { getApiUrl } from '../config/api';
 import {
   Play,
   FileText,
@@ -47,10 +48,10 @@ export const CoursePlayerPage = () => {
 
     setLoading(true);
     Promise.all([
-      fetch(`/api/courses/detail/${courseId}`, {
+      fetch(getApiUrl(`/api/courses/detail/${courseId}`), {
         headers: { Authorization: `Bearer ${token}` },
       }).then((res) => res.json()),
-      fetch(`/api/progress/course/${courseId}`, {
+      fetch(getApiUrl(`/api/progress/course/${courseId}`), {
         headers: { Authorization: `Bearer ${token}` },
       }).then((res) => res.json()),
     ])
@@ -85,7 +86,7 @@ export const CoursePlayerPage = () => {
     if (videoRef.current && currentLesson) {
       const pos = Math.floor(videoRef.current.currentTime);
       if (pos % 5 === 0 && pos > 0) {
-        fetch('/api/progress/video-position', {
+        fetch(getApiUrl('/api/progress/video-position'), {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -106,7 +107,7 @@ export const CoursePlayerPage = () => {
     const isCompleted = !(currentLessonProgress?.isCompleted);
 
     try {
-      const res = await fetch('/api/progress/mark-complete', {
+      const res = await fetch(getApiUrl('/api/progress/mark-complete'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -164,7 +165,7 @@ export const CoursePlayerPage = () => {
     setQuizResult(null);
     setQuizAnswers({});
 
-    fetch(`/api/quizzes/${course._id}/${quiz._id}`, {
+    fetch(getApiUrl(`/api/quizzes/${course._id}/${quiz._id}`), {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((res) => res.json())
@@ -188,7 +189,7 @@ export const CoursePlayerPage = () => {
     }));
 
     try {
-      const res = await fetch(`/api/quizzes/${course._id}/${quizData._id}/submit`, {
+      const res = await fetch(getApiUrl(`/api/quizzes/${course._id}/${quizData._id}/submit`), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

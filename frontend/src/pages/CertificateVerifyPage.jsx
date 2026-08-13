@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import { getApiUrl } from '../config/api';
 import { ShieldCheck, Download, GraduationCap, XCircle } from 'lucide-react';
 
 export const CertificateVerifyPage = () => {
@@ -9,7 +10,7 @@ export const CertificateVerifyPage = () => {
 
   useEffect(() => {
     setLoading(true);
-    fetch(`/api/certificates/verify/${certificateId}`)
+    fetch(getApiUrl(`/api/certificates/verify/${certificateId}`))
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {

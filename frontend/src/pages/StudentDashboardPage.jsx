@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { getApiUrl } from '../config/api';
 import {
   BookOpen,
   CheckCircle2,
@@ -27,10 +28,10 @@ export const StudentDashboardPage = () => {
 
     setLoading(true);
     Promise.all([
-      fetch('/api/enrollments/my-courses', {
+      fetch(getApiUrl('/api/enrollments/my-courses'), {
         headers: { Authorization: `Bearer ${token}` },
       }).then((res) => res.json()),
-      fetch('/api/certificates/my-certificates', {
+      fetch(getApiUrl('/api/certificates/my-certificates'), {
         headers: { Authorization: `Bearer ${token}` },
       }).then((res) => res.json()),
     ])

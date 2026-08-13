@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import { getApiUrl } from '../../config/api';
 import {
   GraduationCap,
   Search,
@@ -27,7 +28,7 @@ export const Navbar = () => {
   const [isCategoryMenuOpen, setIsCategoryMenuOpen] = useState(false);
 
   useEffect(() => {
-    fetch('/api/courses/categories')
+    fetch(getApiUrl('/api/courses/categories'))
       .then((res) => res.json())
       .then((data) => {
         if (data.success) setCategories(data.data);

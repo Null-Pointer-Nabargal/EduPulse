@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
+import { getApiUrl } from '../../config/api';
 import { Search, Plus, UserCheck, UserX, Trash2, X } from 'lucide-react';
 
 export const AdminUserManagement = () => {
@@ -23,7 +24,7 @@ export const AdminUserManagement = () => {
     if (search) query.set('search', search);
     if (roleFilter) query.set('role', roleFilter);
 
-    fetch(`/api/admin/users?${query.toString()}`, {
+    fetch(getApiUrl(`/api/admin/users?${query.toString()}`), {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((res) => res.json())
@@ -40,7 +41,7 @@ export const AdminUserManagement = () => {
 
   const handleToggleStatus = async (targetUser) => {
     try {
-      const res = await fetch(`/api/admin/users/${targetUser._id}`, {
+      const res = await fetch(getApiUrl(`/api/admin/users/${targetUser._id}`), {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -57,7 +58,7 @@ export const AdminUserManagement = () => {
 
   const handleRoleChange = async (targetUser, newRoleVal) => {
     try {
-      const res = await fetch(`/api/admin/users/${targetUser._id}`, {
+      const res = await fetch(getApiUrl(`/api/admin/users/${targetUser._id}`), {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -76,7 +77,7 @@ export const AdminUserManagement = () => {
     if (!window.confirm(`Delete user ${email}? This action cannot be undone.`)) return;
 
     try {
-      const res = await fetch(`/api/admin/users/${id}`, {
+      const res = await fetch(getApiUrl(`/api/admin/users/${id}`), {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -96,7 +97,7 @@ export const AdminUserManagement = () => {
     setCreateError('');
 
     try {
-      const res = await fetch('/api/admin/users', {
+      const res = await fetch(getApiUrl('/api/admin/users'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

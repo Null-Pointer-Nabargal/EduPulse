@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { getApiUrl } from '../config/api';
 import {
   Sparkles,
   ArrowRight,
@@ -18,14 +19,14 @@ export const LandingPage = () => {
   const [searchKey, setSearchKey] = useState('');
 
   useEffect(() => {
-    fetch('/api/courses?limit=3&sort=popular')
+    fetch(getApiUrl('/api/courses?limit=3&sort=popular'))
       .then((res) => res.json())
       .then((data) => {
         if (data.success) setCourses(data.data.courses);
       })
       .catch(() => {});
 
-    fetch('/api/courses/categories')
+    fetch(getApiUrl('/api/courses/categories'))
       .then((res) => res.json())
       .then((data) => {
         if (data.success) setCategories(data.data);

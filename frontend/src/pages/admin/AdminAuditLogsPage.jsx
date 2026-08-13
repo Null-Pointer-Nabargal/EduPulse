@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
+import { getApiUrl } from '../../config/api';
 
 export const AdminAuditLogsPage = () => {
   const { token } = useAuth();
@@ -7,7 +8,7 @@ export const AdminAuditLogsPage = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('/api/admin/audit-logs?limit=50', {
+    fetch(getApiUrl('/api/admin/audit-logs?limit=50'), {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((res) => res.json())

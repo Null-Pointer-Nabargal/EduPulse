@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { getApiUrl } from '../config/api';
 import {
   Star,
   Clock,
@@ -33,7 +34,7 @@ export const CourseDetailPage = () => {
     setLoading(true);
     const headers = token ? { Authorization: `Bearer ${token}` } : {};
 
-    fetch(`/api/courses/detail/${slug}`, { headers })
+    fetch(getApiUrl(`/api/courses/detail/${slug}`), { headers })
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {
@@ -64,7 +65,7 @@ export const CourseDetailPage = () => {
 
     try {
       setEnrolling(true);
-      const res = await fetch('/api/enrollments/enroll', {
+      const res = await fetch(getApiUrl('/api/enrollments/enroll'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

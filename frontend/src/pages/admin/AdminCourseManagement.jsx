@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
+import { getApiUrl } from '../../config/api';
 import { Plus, Edit, Trash2, Search } from 'lucide-react';
 import { CourseBuilderModal } from './CourseBuilderModal';
 
@@ -13,7 +14,7 @@ export const AdminCourseManagement = () => {
 
   const fetchCourses = () => {
     setLoading(true);
-    fetch('/api/admin/courses', {
+    fetch(getApiUrl('/api/admin/courses'), {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((res) => res.json())
@@ -32,7 +33,7 @@ export const AdminCourseManagement = () => {
     if (!window.confirm(`Are you sure you want to delete "${title}"?`)) return;
 
     try {
-      const res = await fetch(`/api/admin/courses/${id}`, {
+      const res = await fetch(getApiUrl(`/api/admin/courses/${id}`), {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -49,7 +50,7 @@ export const AdminCourseManagement = () => {
 
   const handleTogglePublish = async (course) => {
     try {
-      const res = await fetch(`/api/admin/courses/${course._id}`, {
+      const res = await fetch(getApiUrl(`/api/admin/courses/${course._id}`), {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
+import { getApiUrl } from '../../config/api';
 import {
   Users,
   BookOpen,
@@ -15,7 +16,7 @@ export const AdminDashboard = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('/api/admin/analytics', {
+    fetch(getApiUrl('/api/admin/analytics'), {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((res) => res.json())

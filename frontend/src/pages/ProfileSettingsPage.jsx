@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
+import { getApiUrl } from '../config/api';
 import { ShieldCheck, CheckCircle2 } from 'lucide-react';
 
 export const ProfileSettingsPage = () => {
@@ -22,7 +23,7 @@ export const ProfileSettingsPage = () => {
     setLoading(true);
 
     try {
-      const res = await fetch('/api/auth/profile', {
+      const res = await fetch(getApiUrl('/api/auth/profile'), {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
